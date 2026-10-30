@@ -179,11 +179,15 @@ document.getElementById("f").addEventListener("submit", async function(e) {
   body: fd
 });
 
-const t = await r.text();
+const responseText = await r.text();
 
 if (!r.ok) {
-  throw new Error("Server said " + r.status + " " + t.slice(0, 150));
+  throw new Error(
+    "Server Error: " + r.status + " | " + responseText.slice(0, 300)
+  );
 }
+
+show("Server accepted the request. Please verify n8n execution.", true);
 
     show("Submitted successfully. Telegram message is on its way.", true);
     document.getElementById("f").reset();
