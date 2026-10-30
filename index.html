@@ -175,12 +175,15 @@ document.getElementById("f").addEventListener("submit", async function(e) {
     fd.append("submissionId", Date.now() + "-" + Math.random().toString(36).slice(2,8));
 
     const r = await fetch(WEBHOOK_URL, {
-      method: "POST",
-      headers: { "ngrok-skip-browser-warning": "1" },
-      body: fd
-    });
-    const t = await r.text();
-    if (!r.ok) throw new Error("Server said " + r.status + " " + t.slice(0, 150));
+  method: "POST",
+  body: fd
+});
+
+const t = await r.text();
+
+if (!r.ok) {
+  throw new Error("Server said " + r.status + " " + t.slice(0, 150));
+}
 
     show("Submitted successfully. Telegram message is on its way.", true);
     document.getElementById("f").reset();
